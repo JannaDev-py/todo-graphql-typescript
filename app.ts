@@ -1,8 +1,13 @@
+// Sources
 import typeDefs from './schemas/user/typedefs'
-import resolvers from './resolvers/user/resolvers'
+import resolvers from './resolvers/merge'
+
+// Framwork/libraries
 import { ApolloServer } from '@apollo/server'
 import express from 'express'
 import { expressMiddleware } from '@as-integrations/express5'
+
+// Middlewares
 import cookieParser from 'cookie-parser'
 
 async function start (): Promise<void> {
