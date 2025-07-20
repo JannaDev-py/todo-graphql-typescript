@@ -1,20 +1,13 @@
 import { IResolvers } from '@graphql-tools/utils'
+import UserController from '../../controllers/user/user'
 
 const resolvers: IResolvers = {
   Query: {
-    codeEmail: () => {
-      console.log('ask for a email code')
-      return true
-    },
-    verifyCode: (_, args, { req, res }) => {
-      console.log('verify code')
-      return true
-    }
+    codeEmail: UserController.codeEmail,
+    verifyCode: UserController.verifyCode
   },
   Mutation: {
-    createUser: () => {
-      console.log('createUser')
-    }
+    createUser: UserController.createUser
   }
 }
 

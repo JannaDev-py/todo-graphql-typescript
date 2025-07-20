@@ -12,10 +12,10 @@ input CreateUser {
 }
 
 type Query {
-  codeEmail(input: CreateUser): Boolean!
-  verifyCode(input: CreateUser): Boolean!
+  codeEmail(input: CreateUser!): Boolean!
+  verifyCode(input: CreateUser!): Boolean!
 }
 
 type Mutation {
-  createUser(data: CreateUser): User!
+  createUser(data: CreateUser!): User!
 }
