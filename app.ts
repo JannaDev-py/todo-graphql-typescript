@@ -1,0 +1,32 @@
+import typeDefs from './typedefs'
+import resolvers from './resolvers'
+import { ApolloServer } from '@apollo/server'
+import express from 'express'
+import { expressMiddleware } from '@as-integrations/express5'
+import cookieParser from 'cookie-parser'
+
+async function start (): Promise<void> {
+  const app = express()
+
+  const server = new ApolloServer({ typeDefs, resolvers })
+  await server.start()
+
+  app.use(
+    '/graphql',
+    express.json(),
+    cookieParser(),
+
+    expressMiddleware(server, {
+      context: async ({ req }) => {
+        return { }
+      }
+    })
+  )
+
+  app.listen(4000, () => console.log('server at port 4000'))
+}
+
+start()
+  .catch(e => {
+    console.error(e)
+  })
