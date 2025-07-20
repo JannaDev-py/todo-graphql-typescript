@@ -1,5 +1,5 @@
-import typeDefs from './typedefs'
-import resolvers from './resolvers'
+import typeDefs from './schemas/user/typedefs'
+import resolvers from './resolvers/user/resolvers'
 import { ApolloServer } from '@apollo/server'
 import express from 'express'
 import { expressMiddleware } from '@as-integrations/express5'
