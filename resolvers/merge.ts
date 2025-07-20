@@ -3,4 +3,3 @@ import { mergeResolvers } from '@graphql-tools/merge'
 
 const resolversArray = loadFilesSync('./**/*.resolver.ts')
 export default mergeResolvers(resolversArray)
- 

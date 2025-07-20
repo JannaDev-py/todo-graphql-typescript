@@ -1,5 +1,5 @@
 // Sources
-import typeDefs from './schemas/user/typedefs'
+import typeDefs from './schemas/merge'
 import resolvers from './resolvers/merge'
 
 // Framwork/libraries
