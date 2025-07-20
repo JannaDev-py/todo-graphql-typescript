@@ -17,8 +17,8 @@ async function start (): Promise<void> {
     cookieParser(),
 
     expressMiddleware(server, {
-      context: async ({ req }) => {
-        return { }
+      context: async ({ req, res }) => {
+        return { req, res }
       }
     })
   )

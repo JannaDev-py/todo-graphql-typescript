@@ -6,7 +6,7 @@ const resolvers: IResolvers = {
       console.log('ask for a email code')
       return true
     },
-    verifyCode: (_, args, ctx) => {
+    verifyCode: (_, args, { req, res }) => {
       console.log('verify code')
       return true
     }
