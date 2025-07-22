@@ -35,4 +35,4 @@ mongoose.connect(process.env.MONGODB_URL as string)
 
     app.listen(4000, () => console.log('server at port 4000'))
   })
-  .catch(e => console.error('error connection to database'))
+  .catch(e => console.error('error connection to database', e))

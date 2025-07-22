@@ -6,7 +6,9 @@ export interface User {
 }
 
 export interface CreateUser {
-  name?: string
-  email: string
-  pwd: string
+  input: {
+    name?: string
+    email: string
+    pwd: string
+  }
 }

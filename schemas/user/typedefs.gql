@@ -16,8 +16,6 @@ type Query {
   verifyCode(input: CreateUser!): Boolean!
 }
 
-union createUserResponse = User | Boolean
-
 type Mutation {
-  createUser(data: CreateUser!): createUserResponse!
+  createUser(data: CreateUser!): User!
 }

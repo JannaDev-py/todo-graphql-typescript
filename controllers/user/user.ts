@@ -4,16 +4,18 @@ import { sendEmail, verifyEmail, generateCode } from '../../utils/utils'
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 
-dotenv.config()
+dotenv.config({ quiet: true })
 
 const controller = {
   codeEmail: async function (root: any, args: CreateUser, ctx: { req: Request, res: Response }): Promise<boolean> {
     const { res } = ctx
-    if (verifyEmail(args.email)) {
-      const code = generateCode()
-      const hashInfo = jwt.sign({ email: args.email, code }, process.env.JWT as string)
+    const { email } = args.input
 
-      await sendEmail(args.email, code)
+    if (verifyEmail(email)) {
+      const code = generateCode()
+      const hashInfo = jwt.sign({ email, code }, process.env.JWT as string)
+
+      await sendEmail(email, code)
 
       res.cookie('verifyEmail', hashInfo, {
         httpOnly: true
