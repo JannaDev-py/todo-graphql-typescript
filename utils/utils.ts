@@ -12,7 +12,7 @@ const transporter = nodemailer.createTransport({
 })
 
 export function generateCode (): number {
-  return Math.floor(Math.random() * 10000)
+  return Number(Math.floor(Math.random() * 10000).toString().padStart(5, '0'))
 }
 
 export async function sendEmail (email: string, code: number, msg?: string): Promise<boolean> {
