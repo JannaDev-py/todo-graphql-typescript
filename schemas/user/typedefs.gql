@@ -15,7 +15,7 @@ input ConfirmCreateUser {
   name: String
   email: String!
   pwd: String!
-  code: int!
+  code: Int!
 }
 
 type Query {

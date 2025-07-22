@@ -29,9 +29,12 @@ const controller = {
 
   verifyCode: function (root: any, args: ComfirmCreateUser, ctx: { req: Request, res: Response }): boolean {
     const { req, res } = ctx
+
     try {
       interface CookieInfo { email: string, code: number }
       const cookieInfo = jwt.verify(req.cookies.verifyEmail, JWT as string)
+
+      res.clearCookie('verifyEmail')
 
       res.cookie('EmailVerified', jwt.sign({ verified: true }, JWT as string), {
         httpOnly: true
@@ -41,10 +44,10 @@ const controller = {
       args.input.email === (cookieInfo as CookieInfo).email) {
         return true
       }
+      return false
     } catch (err) {
       return false
     }
-    return true
   },
 
   createUser: function (root: any, args: CreateUser, ctx: { req: Request, res: Response }): User {
