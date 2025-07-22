@@ -9,6 +9,7 @@ input CreateUser {
   name: String
   email: String!
   pwd: String!
+  test: String
 }
 
 input ConfirmCreateUser {

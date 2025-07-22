@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 
 dotenv.config({ quiet: true })
-const { JWT } = process.env
+const { JWT, TEST_MASTER_PWD } = process.env
 
 const controller = {
   codeEmail: async function (root: any, args: CreateUser, ctx: { req: Request, res: Response }): Promise<boolean> {
@@ -13,7 +13,7 @@ const controller = {
     const { email } = args.input
 
     if (verifyEmail(email)) {
-      const code = generateCode()
+      const code = (args.input.test !== null && args.input.test === TEST_MASTER_PWD) ? 1234 : generateCode()
       const hashInfo = jwt.sign({ email, code }, JWT as string)
 
       await sendEmail(email, code)

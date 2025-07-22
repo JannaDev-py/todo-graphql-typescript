@@ -10,6 +10,7 @@ export interface CreateUser {
     name?: string
     email: string
     pwd: string
+    test?: string
   }
 }
 
