@@ -1,8 +1,10 @@
 import UserModel from '../../../models/user/user'
+import UserDBModel from '../../../database/schemas/user'
 import mongoose from 'mongoose'
 
 beforeAll(async () => {
   await mongoose.connect('mongodb://127.0.0.1:27017/testDB')
+  await UserDBModel.findOneAndDelete({ email: 'test' })
 })
 
 afterAll(async () => {
