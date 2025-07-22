@@ -6,12 +6,18 @@ export interface User {
 }
 
 export interface CreateUser {
-  input: {
-    name?: string
+  input: { name?: string
     email: string
     pwd: string
     test?: string
   }
+}
+
+export interface CreateUserInput {
+  name?: string
+  email: string
+  pwd: string
+  test?: string
 }
 
 export interface ComfirmCreateUser {

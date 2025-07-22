@@ -14,25 +14,26 @@ import mongoose from 'mongoose'
 
 dotenv.config({ quiet: true })
 
-mongoose.connect(process.env.MONGODB_URL as string)
-  .then(async () => {
-    const app = express()
+export async function createApp (): Promise<express.Express> {
+  const app = express()
 
-    const server = new ApolloServer({ typeDefs, resolvers })
-    await server.start()
+  await mongoose.connect(process.env.MONGODB_URL as string)
+    .catch(e => console.error('error connection to database'))
 
-    app.use(
-      '/graphql',
-      express.json(),
-      cookieParser(),
+  const server = new ApolloServer({ typeDefs, resolvers })
+  await server.start()
 
-      expressMiddleware(server, {
-        context: async ({ req, res }) => {
-          return { req, res }
-        }
-      })
-    )
+  app.use(
+    '/graphql',
+    express.json(),
+    cookieParser(),
 
-    app.listen(4000, () => console.log('server at port 4000'))
-  })
-  .catch(e => console.error('error connection to database', e))
+    expressMiddleware(server, {
+      context: async ({ req, res }) => {
+        return { req, res }
+      }
+    })
+  )
+
+  return app
+}

@@ -1,9 +1,9 @@
-import { CreateUser, User } from '../../interfaces/user'
+import { CreateUserInput, User } from '../../interfaces/user'
 import UserDBModel from '../../database/schemas/user'
 import { DuplicateEntry, Database, NotFound } from '../../Errors/errors'
 
 const model = {
-  createUser: async function (args: CreateUser): Promise<User | typeof DuplicateEntry | typeof Database> {
+  createUser: async function (args: CreateUserInput): Promise<User | typeof DuplicateEntry | typeof Database> {
     try {
       const newUser = new UserDBModel(args)
       return await newUser.save() as User

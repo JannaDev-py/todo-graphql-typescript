@@ -10,10 +10,10 @@ const { JWT, TEST_MASTER_PWD } = process.env
 const controller = {
   codeEmail: async function (root: any, args: CreateUser, ctx: { req: Request, res: Response }): Promise<boolean> {
     const { res } = ctx
-    const { email } = args.input
+    const { email, test } = args.input
 
     if (verifyEmail(email)) {
-      const code = (args.input.test !== null && args.input.test === TEST_MASTER_PWD) ? 1234 : generateCode()
+      const code = (test !== null && test === TEST_MASTER_PWD) ? 1234 : generateCode()
       const hashInfo = jwt.sign({ email, code }, JWT as string)
 
       await sendEmail(email, code)
@@ -32,7 +32,7 @@ const controller = {
 
     try {
       interface CookieInfo { email: string, code: number }
-      const cookieInfo = jwt.verify(req.cookies.verifyEmail, JWT as string)
+      const { email, code } = (jwt.verify(req.cookies.verifyEmail, JWT as string) as CookieInfo)
 
       res.clearCookie('verifyEmail')
 
@@ -40,8 +40,8 @@ const controller = {
         httpOnly: true
       })
 
-      if (args.input.code === (cookieInfo as CookieInfo).code &&
-      args.input.email === (cookieInfo as CookieInfo).email) {
+      if (args.input.code === code &&
+      args.input.email === email) {
         return true
       }
       return false
