@@ -11,9 +11,16 @@ input CreateUser {
   pwd: String!
 }
 
+input ConfirmCreateUser {
+  name: String
+  email: String!
+  pwd: String!
+  code: int!
+}
+
 type Query {
   codeEmail(input: CreateUser!): Boolean!
-  verifyCode(input: CreateUser!): Boolean!
+  verifyCode(input: ConfirmCreateUser!): Boolean!
 }
 
 type Mutation {

@@ -12,3 +12,12 @@ export interface CreateUser {
     pwd: string
   }
 }
+
+export interface ComfirmCreateUser {
+  input: {
+    name?: string
+    email: string
+    pwd: string
+    code: number
+  }
+}
