@@ -9,3 +9,4 @@ function createError (name: string): any {
 
 export const DuplicateEntry = createError('duplicateEntry')
 export const Database = createError('database error')
+export const NotFound = createError('Not found')

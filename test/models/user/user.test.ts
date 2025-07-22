@@ -1,6 +1,6 @@
 import UserModel from '../../../models/user/user'
 import mongoose from 'mongoose'
-import { DuplicateEntry } from '../../../Errors/errors'
+import { DuplicateEntry, NotFound } from '../../../Errors/errors'
 
 beforeAll(async () => {
   await mongoose.connect('mongodb://127.0.0.1:27017/testDB')
@@ -12,9 +12,10 @@ afterAll(async () => {
 })
 
 describe('model-user', () => {
+  let id: String
   test('create user fn', async () => {
     const response = await UserModel.createUser({ name: 'test', email: 'test', pwd: 'test' })
-
+    id = response._id
     expect(response).toEqual(
       expect.objectContaining({
         _id: expect.anything(),
@@ -24,8 +25,24 @@ describe('model-user', () => {
       })
     )
   })
+
   test('duplicate entry creating user', async () => {
     await expect(UserModel.createUser({ name: 'test', email: 'test', pwd: 'test' }))
       .rejects.toThrow(new DuplicateEntry('email in use'))
+  })
+
+  test('delete user', async () => {
+    const response = await UserModel.deleteUser(id)
+
+    expect(response).toEqual(
+      expect.objectContaining({
+        _id: expect.anything(),
+        name: 'test',
+        email: 'test',
+        pwd: 'test'
+      })
+    )
+
+    await expect(UserModel.deleteUser(id)).rejects.toThrow(new NotFound('User dont exist'))
   })
 })

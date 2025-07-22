@@ -1,6 +1,6 @@
 import { CreateUser, User } from '../../interfaces/user'
 import UserDBModel from '../../database/schemas/user'
-import { DuplicateEntry, Database } from '../../Errors/errors'
+import { DuplicateEntry, Database, NotFound } from '../../Errors/errors'
 
 const model = {
   createUser: async function (args: CreateUser): Promise<User | typeof DuplicateEntry | typeof Database> {
@@ -15,11 +15,13 @@ const model = {
       throw new Database('database error')
     }
   },
-  deleteUsere: async function (id: String): Promise<User | typeof Database> {
+  deleteUser: async function (id: String): Promise<User | typeof Database> {
     try {
       const deleteUser = await UserDBModel.findByIdAndDelete(id)
-      return deleteUser
+      if (deleteUser !== null) return deleteUser
+      else throw new NotFound('User dont exist')
     } catch (e) {
+      if (e instanceof NotFound) throw e
       throw new Database('database error')
     }
   }
