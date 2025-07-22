@@ -1,5 +1,6 @@
 import UserModel from '../../../models/user/user'
 import mongoose from 'mongoose'
+import { DuplicateEntry } from '../../../Errors/errors'
 
 beforeAll(async () => {
   await mongoose.connect('mongodb://127.0.0.1:27017/testDB')
@@ -22,5 +23,9 @@ describe('model-user', () => {
         pwd: 'test'
       })
     )
+  })
+  test('duplicate entry creating user', async () => {
+    await expect(UserModel.createUser({ name: 'test', email: 'test', pwd: 'test' }))
+      .rejects.toThrow(new DuplicateEntry('email in use'))
   })
 })

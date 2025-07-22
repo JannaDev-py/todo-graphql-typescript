@@ -5,14 +5,20 @@ import { DuplicateEntry, Database } from '../../Errors/errors'
 const model = {
   createUser: async function (args: CreateUser): Promise<User | typeof DuplicateEntry | typeof Database> {
     try {
-      const guard = await UserDBModel.findOne({ email: args.email })
-
-      if (guard !== null) {
+      const newUser = new UserDBModel(args)
+      return await newUser.save() as User
+    } catch (e) {
+      if ((e as any).code === 11000 && (e as Error).message.includes('email')) {
         throw new DuplicateEntry('email in use')
       }
 
-      const newUser = new UserDBModel(args)
-      return await newUser.save() as User
+      throw new Database('database error')
+    }
+  },
+  deleteUsere: async function (id: String): Promise<User | typeof Database> {
+    try {
+      const deleteUser = await UserDBModel.findByIdAndDelete(id)
+      return deleteUser
     } catch (e) {
       throw new Database('database error')
     }
