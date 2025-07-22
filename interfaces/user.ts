@@ -1,12 +1,12 @@
 export interface User {
-  id: String
-  name?: String
-  email: String
-  pwd: String
+  id: string
+  name?: string
+  email: string
+  pwd: string
 }
 
 export interface CreateUser {
-  name?: String
-  email: String
-  pwd: String
+  name?: string
+  email: string
+  pwd: string
 }
