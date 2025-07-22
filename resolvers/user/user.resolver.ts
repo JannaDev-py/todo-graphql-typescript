@@ -7,7 +7,8 @@ const resolvers: IResolvers = {
     verifyCode: UserController.verifyCode
   },
   Mutation: {
-    createUser: UserController.createUser
+    createUser: UserController.createUser,
+    deleteUser: UserController.deleteUser
   }
 }
 

@@ -32,6 +32,10 @@ const controller = {
 
   createUser: function (root: any, args: CreateUser, ctx: { req: Request, res: Response }): User {
     return { id: '', name: '', email: '', pwd: '' }
+  },
+
+  deleteUser: function (root: any, args: CreateUser, ctx: { req: Request, res: Response }): User {
+    return { id: '', name: '', email: '', pwd: '' }
   }
 
 }
