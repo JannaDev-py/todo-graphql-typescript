@@ -2,6 +2,7 @@ import request from 'supertest'
 import { createApp } from '../../../app'
 import dotenv from 'dotenv'
 import { Express } from 'express'
+import mongoose from 'mongoose'
 
 dotenv.config({ quiet: true })
 
@@ -10,6 +11,10 @@ let app: Express
 
 beforeAll(async () => {
   app = await createApp()
+})
+
+afterAll(async () => {
+  await mongoose.connection.close()
 })
 
 describe('Controller-User', () => {
