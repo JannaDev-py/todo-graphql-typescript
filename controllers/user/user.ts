@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { User, CreateUser, ComfirmCreateUser } from '../../interfaces/user'
 import { sendEmail, verifyEmail, generateCode } from '../../utils/utils'
+import UserModel from '../../models/user/user'
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 
@@ -50,8 +51,21 @@ const controller = {
     }
   },
 
-  createUser: function (root: any, args: CreateUser, ctx: { req: Request, res: Response }): User {
-    return { id: '', name: '', email: '', pwd: '' }
+  createUser: async function (root: any, args: CreateUser, ctx: { req: Request, res: Response }): Promise<User | null> {
+    const { req, res } = ctx
+
+    try {
+      const emailCookie = (jwt.verify(req.cookies.EmailVerified, JWT as string)) as { email: string }
+      args.input.email = emailCookie.email
+
+      const result = await UserModel.createUser(args.input)
+      res.cookie('refreshToken', jwt.sign({ result }, JWT as string), { httpOnly: true, maxAge: 60 * 60 * 24 * 50 })
+      res.cookie('accessToken', jwt.sign({ result }, JWT as string), { httpOnly: true, maxAge: 60 * 60 * 15 })
+
+      return result
+    } catch (e) {
+      return null
+    }
   },
 
   deleteUser: function (root: any, args: CreateUser, ctx: { req: Request, res: Response }): User {
