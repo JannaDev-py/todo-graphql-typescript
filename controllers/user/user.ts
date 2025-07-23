@@ -61,8 +61,9 @@ const controller = {
       res.clearCookie('emailVerified')
 
       const result = await UserModel.createUser(args.input)
-      res.cookie('refreshToken', jwt.sign({ result }, JWT as string), { httpOnly: true, maxAge: 60 * 60 * 24 * 50 })
-      res.cookie('accessToken', jwt.sign({ result }, JWT as string), { httpOnly: true, maxAge: 60 * 60 * 15 })
+      delete result.__v
+      res.cookie('refreshToken', jwt.sign(result, JWT as string), { httpOnly: true, maxAge: 60 * 60 * 24 * 50 })
+      res.cookie('accessToken', jwt.sign(result, JWT as string), { httpOnly: true, maxAge: 60 * 60 * 15 })
 
       return result
     } catch (e) {
@@ -70,8 +71,19 @@ const controller = {
     }
   },
 
-  deleteUser: function (root: any, args: CreateUser, ctx: { req: Request, res: Response }): User {
-    return { id: '', name: '', email: '', pwd: '' }
+  deleteUser: async function (root: any, args: CreateUser, ctx: { req: Request, res: Response }): Promise<User | null> {
+    const { req, res } = ctx
+    try {
+      const user = (jwt.verify(req.cookies.refreshToken, JWT as string) as { name: string, email: string, pwd: string, _id: string })
+
+      res.clearCookie('refreshToken')
+      res.clearCookie('accessToken')
+
+      const result = await UserModel.deleteUser(user._id)
+      return result
+    } catch (e) {
+      return null
+    }
   }
 
 }
