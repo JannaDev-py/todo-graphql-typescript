@@ -36,7 +36,7 @@ const controller = {
 
       res.clearCookie('verifyEmail')
 
-      res.cookie('EmailVerified', jwt.sign({ verified: true }, JWT as string), {
+      res.cookie('EmailVerified', jwt.sign({ email }, JWT as string), {
         httpOnly: true
       })
 

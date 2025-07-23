@@ -48,4 +48,30 @@ describe('Controller-User', () => {
     const cookie = response.headers['set-cookie']
     expect(cookie?.[0]).toMatch(/^verifyEmail=/)
   })
+
+  test('verifyEmail', async () => {
+    const query = `#graphql
+      query ExampleQuery($input: ConfirmCreateUser!) {
+        verifyCode(input: $input)
+      }
+    `
+    const variables = {
+      input: {
+        email: 'floo234.clashroyale@gmail.com',
+        name: 'test',
+        pwd: '123',
+        code: 1234
+      }
+    }
+
+    const response = await agent
+      .post('/graphql')
+      .send({ query, variables })
+
+    expect(response.body.data.verifyCode).toBe(true)
+
+    const cookie = response.headers['set-cookie']
+    expect(cookie?.[1]).toMatch(/^EmailVerified=/)
+    expect(cookie?.includes('verifyEmail')).toBe(false)
+  })
 })
