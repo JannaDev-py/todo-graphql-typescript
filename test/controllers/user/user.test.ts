@@ -115,7 +115,31 @@ describe('Controller-User', () => {
     expect(cookies?.some(cookie => cookie.includes('accessToken='))).toBe(true)
   })
 
-  test('delteUser', async () => {
+  test('deleteUser', async () => {
+    const query = `#graphql
+      mutation ExampleQuery {
+        deleteUser{
+          _id
+          name
+          email
+          pwd
+        }
+      }
+    `
 
+    const response = await agent
+      .post('/graphql')
+      .send({ query })
+
+    expect(response.body.data).toEqual(
+      expect.objectContaining({
+        deleteUser: {
+          _id: expect.any(String),
+          name: 'test',
+          email: 'example@gmail.com',
+          pwd: '123'
+        }
+      })
+    )
   })
 })
