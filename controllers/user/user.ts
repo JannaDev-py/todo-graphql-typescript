@@ -37,7 +37,7 @@ const controller = {
 
       res.clearCookie('verifyEmail')
 
-      res.cookie('EmailVerified', jwt.sign({ email }, JWT as string), {
+      res.cookie('emailVerified', jwt.sign({ email }, JWT as string), {
         httpOnly: true
       })
 
@@ -55,8 +55,10 @@ const controller = {
     const { req, res } = ctx
 
     try {
-      const emailCookie = (jwt.verify(req.cookies.EmailVerified, JWT as string)) as { email: string }
+      const emailCookie = (jwt.verify(req.cookies.emailVerified, JWT as string)) as { email: string }
       args.input.email = emailCookie.email
+
+      res.clearCookie('emailVerified')
 
       const result = await UserModel.createUser(args.input)
       res.cookie('refreshToken', jwt.sign({ result }, JWT as string), { httpOnly: true, maxAge: 60 * 60 * 24 * 50 })

@@ -71,9 +71,8 @@ describe('Controller-User', () => {
 
     expect(response.body.data.verifyCode).toBe(true)
 
-    const cookie = response.headers['set-cookie']
-    expect(cookie?.[1]).toMatch(/^EmailVerified=/)
-    expect(cookie?.includes('verifyEmail')).toBe(false)
+    const cookie: string[] = response.headers['set-cookie']
+    expect(cookie?.[1]).toMatch(/^emailVerified=/)
   })
 
   test('createUser', async () => {
@@ -110,5 +109,13 @@ describe('Controller-User', () => {
         }
       })
     )
+
+    const cookies: string[] = response.headers['set-cookie']
+    expect(cookies?.some(cookie => cookie.includes('refreshToken='))).toBe(true)
+    expect(cookies?.some(cookie => cookie.includes('accessToken='))).toBe(true)
+  })
+
+  test('delteUser', async () => {
+
   })
 })
