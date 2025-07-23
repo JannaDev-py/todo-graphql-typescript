@@ -14,6 +14,7 @@ beforeAll(async () => {
 })
 
 afterAll(async () => {
+  await mongoose.connection.dropDatabase()
   await mongoose.connection.close()
 })
 
@@ -32,7 +33,7 @@ describe('Controller-User', () => {
     `
     const variables = {
       input: {
-        email: 'floo234.clashroyale@gmail.com',
+        email: 'example@gmail.com',
         name: 'test',
         pwd: '123',
         test: TEST_MASTER_PWD as string
@@ -57,7 +58,7 @@ describe('Controller-User', () => {
     `
     const variables = {
       input: {
-        email: 'floo234.clashroyale@gmail.com',
+        email: 'example@gmail.com',
         name: 'test',
         pwd: '123',
         code: 1234
@@ -73,5 +74,41 @@ describe('Controller-User', () => {
     const cookie = response.headers['set-cookie']
     expect(cookie?.[1]).toMatch(/^EmailVerified=/)
     expect(cookie?.includes('verifyEmail')).toBe(false)
+  })
+
+  test('createUser', async () => {
+    const query = `#graphql
+      mutation ExampleQuery($input: CreateUser!) {
+        createUser(input: $input) {
+          _id
+          name
+          email
+          pwd
+        }
+      }
+    `
+
+    const variables = {
+      input: {
+        email: 'example@gmail.com',
+        name: 'test',
+        pwd: '123'
+      }
+    }
+
+    const response = await agent
+      .post('/graphql')
+      .send({ query, variables })
+
+    expect(response.body.data).toEqual(
+      expect.objectContaining({
+        createUser: {
+          _id: expect.any(String),
+          name: 'test',
+          email: 'example@gmail.com',
+          pwd: '123'
+        }
+      })
+    )
   })
 })
