@@ -1,12 +1,20 @@
 import { CreateUserInput, User } from '../../interfaces/user'
 import UserDBModel from '../../database/schemas/user'
 import { DuplicateEntry, Database, NotFound } from '../../Errors/errors'
+import bcrypt from 'bcrypt'
+import dotenv from 'dotenv'
+
+dotenv.config({ quiet: true })
+
+const { SALT } = process.env
 
 const model = {
   createUser: async function (args: CreateUserInput): Promise<User | typeof DuplicateEntry | typeof Database> {
     try {
       const user = await UserDBModel.findOne({ email: args.email })
       if (user !== null) throw new DuplicateEntry('email in use')
+
+      args.email = await bcrypt.hash(args.email, SALT as string)
 
       const newUser = new UserDBModel(args)
       return await newUser.save() as User
