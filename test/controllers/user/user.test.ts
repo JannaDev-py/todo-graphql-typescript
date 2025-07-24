@@ -134,6 +134,36 @@ describe('Controller-User', () => {
     expect(response.body.data.logIn).toBe(true)
   })
 
+  describe('Controller-Task', () => {
+    test('createTask', async () => {
+      const query = `#graphql
+        mutation CreateTask($input: TaskInput!) {
+          createTask(input: $input) {
+            id_user
+            title
+          }
+        }
+      `
+
+      const variables = {
+        input: {
+          title: 'test'
+        }
+      }
+
+      const response = await agent
+        .post('/graphql')
+        .send({ query, variables })
+
+      expect(response.body.data.createTask).toEqual(
+        expect.objectContaining({
+          id_user: expect.any(String),
+          title: 'test'
+        })
+      )
+    })
+  })
+
   test('deleteUser', async () => {
     const query = `#graphql
       mutation ExampleQuery {

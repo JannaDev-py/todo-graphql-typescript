@@ -12,6 +12,6 @@ type Query {
 }
 
 type Mutation {
-  createTask(input: TaskInput): Task
-  deleteTask(input: TaskInput): Task
+  createTask(input: TaskInput!): Task
+  deleteTask(input: TaskInput!): Task
 }

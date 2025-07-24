@@ -10,6 +10,7 @@ const model = {
       throw new Database('something went wrong')
     }
   },
+
   createTask: async function (id: string, title: string) {
     try {
       const newTask = await new TaskDBModel({ id_user: id, title })
@@ -20,6 +21,7 @@ const model = {
       throw new Database('something went wrong')
     }
   },
+
   deleteTask: async function (id: string, title: string) {
     try {
       const deleteTask = await TaskDBModel.findOneAndDelete({ id_user: id, title })
