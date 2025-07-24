@@ -30,7 +30,11 @@ const controller = {
   },
 
   deleteTask: function (root: any, args: TaskInput, ctx: { req: Request, res: Response, user: UserAccessToken }) {
+    try {
 
+    } catch (e) {
+      
+    }
   }
 }
 

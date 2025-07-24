@@ -185,6 +185,34 @@ describe('Controller-User', () => {
         ])
       )
     })
+
+    test('deleteTask', async () => {
+      const query = `#graphql
+        mutation deleteTask($input: TaskInput!) {
+          deleteTask(input: $input) {
+            id_user
+            title
+          }
+        }
+      `
+
+      const variables = {
+        input: {
+          title: 'test'
+        }
+      }
+
+      const response = await agent
+        .post('/graphql')
+        .send({ query, variables })
+
+      expect(response.body.data.deleteTask).toEqual(
+        expect.objectContaining({
+          id_user: expect.any(String),
+          title: 'test'
+        })
+      )
+    })
   })
 
   test('deleteUser', async () => {
