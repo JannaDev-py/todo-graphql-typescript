@@ -14,7 +14,7 @@ const model = {
       const user = await UserDBModel.findOne({ email: args.email })
       if (user !== null) throw new DuplicateEntry('email in use')
 
-      args.email = await bcrypt.hash(args.email, SALT as string)
+      args.pwd = await bcrypt.hash(args.pwd, Number(SALT as string))
 
       const newUser = new UserDBModel(args)
       return await newUser.save() as User

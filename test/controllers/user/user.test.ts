@@ -82,7 +82,6 @@ describe('Controller-User', () => {
           _id
           name
           email
-          pwd
         }
       }
     `
@@ -104,8 +103,7 @@ describe('Controller-User', () => {
         createUser: {
           _id: expect.any(String),
           name: 'test',
-          email: 'example@gmail.com',
-          pwd: '123'
+          email: 'example@gmail.com'
         }
       })
     )
@@ -122,7 +120,6 @@ describe('Controller-User', () => {
           _id
           name
           email
-          pwd
         }
       }
     `
@@ -136,8 +133,7 @@ describe('Controller-User', () => {
         deleteUser: {
           _id: expect.any(String),
           name: 'test',
-          email: 'example@gmail.com',
-          pwd: '123'
+          email: 'example@gmail.com'
         }
       })
     )

@@ -21,7 +21,7 @@ describe('model-user', () => {
         _id: expect.anything(),
         name: 'test',
         email: 'test',
-        pwd: 'test'
+        pwd: expect.any(String)
       })
     )
   })
@@ -39,7 +39,7 @@ describe('model-user', () => {
         _id: expect.anything(),
         name: 'test',
         email: 'test',
-        pwd: 'test'
+        pwd: expect.any(String)
       })
     )
 

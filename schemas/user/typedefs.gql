@@ -5,6 +5,12 @@ type User {
   pwd: String!
 }
 
+type ReturnUser {
+  _id: ID!
+  name: String
+  email: String!
+}
+
 input CreateUser {
   name: String
   email: String!
@@ -25,6 +31,6 @@ type Query {
 }
 
 type Mutation {
-  createUser(input: CreateUser!): User
-  deleteUser: User
+  createUser(input: CreateUser!): ReturnUser
+  deleteUser: ReturnUser
 }
