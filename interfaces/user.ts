@@ -29,4 +29,4 @@ export interface ComfirmCreateUser {
   }
 }
 
-export interface UserAccessToken { user: { name: string, email: string, pwd: string, _id: string, __v?: string }}
+export interface UserAccessToken { user: { name: string, email: string, pwd: string, _id: string, __v?: string } | null}

@@ -39,11 +39,11 @@ export async function createApp (): Promise<express.Express> {
             const user = jwt.verify(accessToken, JWT as string)
             return { req, res, user }
           } catch (e) {
-            return { req, res }
+            return { req, res, user: null }
           }
         }
 
-        return { req, res }
+        return { req, res, user: null }
       }
     })
   )

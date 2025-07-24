@@ -77,12 +77,15 @@ const controller = {
     const { res } = ctx
     try {
       const { user } = ctx.user
+      if (user !== null) {
+        res.clearCookie('refreshToken')
+        res.clearCookie('accessToken')
 
-      res.clearCookie('refreshToken')
-      res.clearCookie('accessToken')
-
-      const result = await UserModel.deleteUser(user._id)
-      return result
+        const result = await UserModel.deleteUser(user._id)
+        return result
+      } else {
+        return null
+      }
     } catch (e) {
       return null
     }
