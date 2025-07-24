@@ -1,11 +1,11 @@
 
 # TODO-GRAPHQL-TYPESCRIPT
 
-## Learn Graphql
+## 📚 Learn GraphQL
 
-This respository brings you a template o either a way to know if you going well, because all tutorials and respositories i found it was either deprecated or incomplete, this i hope it helps you to know the most important things to worl with GraphQL in NodeJS
+This repository offers a structured template to help developers understand how to build robust GraphQL applications with Node.js. I created it after noticing that most tutorials and repositories I found were either deprecated or incomplete — even recent ones.
 
-
+Whether you're practicing or trying to verify if you're on the right track, this project aims to showcase the essential components of building a GraphQL backend with modern tooling and good architecture.
 
 
 ## Tech Stack
