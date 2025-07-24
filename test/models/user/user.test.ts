@@ -31,6 +31,10 @@ describe('model-user', () => {
       .rejects.toThrow(new DuplicateEntry('email in use'))
   })
 
+  test('logIn', async () => {
+    await UserModel.logIn({ name: 'test', email: 'test', pwd: 'test' })
+  })
+
   test('delete user', async () => {
     const response = await UserModel.deleteUser(id)
 

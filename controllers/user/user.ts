@@ -91,7 +91,6 @@ const controller = {
   },
 
   logIn: function (root: any, args: CreateUser, ctx: { req: Request, res: Response }): boolean {
-    return true
   },
 
   logOut: function (root: any, args: CreateUser, ctx: { req: Request, res: Response }): boolean {

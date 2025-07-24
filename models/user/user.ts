@@ -1,6 +1,6 @@
 import { CreateUserInput, User } from '../../interfaces/user'
 import UserDBModel from '../../database/schemas/user'
-import { DuplicateEntry, Database, NotFound } from '../../Errors/errors'
+import { DuplicateEntry, Database, NotFound, IncorrectPwd } from '../../Errors/errors'
 import bcrypt from 'bcrypt'
 import dotenv from 'dotenv'
 
@@ -26,6 +26,7 @@ const model = {
       throw new Database('database error')
     }
   },
+
   deleteUser: async function (id: String): Promise<User | typeof Database> {
     try {
       const deleteUser = await UserDBModel.findByIdAndDelete(id)
@@ -34,6 +35,22 @@ const model = {
     } catch (e) {
       if (e instanceof NotFound) throw e
       throw new Database('database error')
+    }
+  },
+
+  logIn: async function (args: CreateUserInput): Promise<User | typeof IncorrectPwd | typeof Database> {
+    try {
+      const user = await UserDBModel.findOne({ email: args.email })
+
+      if (user !== null) {
+        const pwd = await bcrypt.compare(args.pwd, user.pwd)
+
+        if (pwd === true) {
+          return user
+        } else throw new IncorrectPwd('incorrect pwd')
+      }
+    } catch (e) {
+      return new Database('Something went wrong')
     }
   }
 }
