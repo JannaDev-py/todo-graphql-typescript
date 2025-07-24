@@ -38,7 +38,7 @@ const model = {
     }
   },
 
-  logIn: async function (args: CreateUserInput): Promise<User | typeof IncorrectPwd | typeof Database> {
+  logIn: async function (args: { email: string, pwd: string }): Promise<User | typeof IncorrectPwd | typeof Database> {
     try {
       const user = await UserDBModel.findOne({ email: args.email })
 

@@ -91,6 +91,17 @@ const controller = {
   },
 
   logIn: function (root: any, args: CreateUser, ctx: { req: Request, res: Response }): boolean {
+    const { res } = ctx
+    try {
+      const user = UserModel.logIn({ email: args.input.email, pwd: args.input.pwd })
+      console.log({ user })
+      res.cookie('refreshToken', jwt.sign({ user }, JWT as string), { httpOnly: true, maxAge: 60 * 60 * 24 * 50 })
+      res.cookie('accessToken', jwt.sign({ user }, JWT as string), { httpOnly: true, maxAge: 60 * 60 * 15 })
+
+      return true
+    } catch (e) {
+      return false
+    }
   },
 
   logOut: function (root: any, args: CreateUser, ctx: { req: Request, res: Response }): boolean {

@@ -32,7 +32,16 @@ describe('model-user', () => {
   })
 
   test('logIn', async () => {
-    await UserModel.logIn({ name: 'test', email: 'test', pwd: 'test' })
+    const response = await UserModel.logIn({ email: 'test', pwd: 'test' })
+
+    expect(response).toEqual(
+      expect.objectContaining({
+        _id: expect.anything(),
+        name: 'test',
+        email: 'test',
+        pwd: expect.any(String)
+      })
+    )
   })
 
   test('delete user', async () => {
