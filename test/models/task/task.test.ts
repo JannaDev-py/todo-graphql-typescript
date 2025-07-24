@@ -29,6 +29,7 @@ describe('Task-model', () => {
       })
     )
   })
+
   test('getTask', async () => {
     const response = await Taskmodel.getTask(user.id)
 
@@ -40,6 +41,18 @@ describe('Task-model', () => {
           id_user: user.id
         })
       ])
+    )
+  })
+
+  test('deleteTask', async () => {
+    const response = await Taskmodel.deleteTask(user.id, 'test')
+
+    expect(response).toEqual(
+      expect.objectContaining({
+        _id: expect.anything(),
+        title: 'test',
+        id_user: user.id
+      })
     )
   })
 })
