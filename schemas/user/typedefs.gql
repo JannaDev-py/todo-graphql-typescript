@@ -28,6 +28,8 @@ input ConfirmCreateUser {
 type Query {
   codeEmail(input: CreateUser!): Boolean!
   verifyCode(input: ConfirmCreateUser!): Boolean!
+  logIn(input: CreateUser): Boolean!
+  logOut: Boolean!
 }
 
 type Mutation {

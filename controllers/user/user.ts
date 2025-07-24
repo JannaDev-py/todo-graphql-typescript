@@ -88,6 +88,18 @@ const controller = {
     } catch (e) {
       return null
     }
+  },
+
+  logIn: function (root: any, args: CreateUser, ctx: { req: Request, res: Response }): boolean {
+    return true
+  },
+
+  logOut: function (root: any, args: CreateUser, ctx: { req: Request, res: Response }): boolean {
+    const { res } = ctx
+    res.clearCookie('refreshToken')
+    res.clearCookie('accessToken')
+
+    return true
   }
 
 }
