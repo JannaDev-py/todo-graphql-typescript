@@ -1,7 +1,7 @@
 import { TaskInput } from '../../interfaces/task'
 
 const controller = {
-  getTask: function (root: any, args: { id: string }, ctx: { req: Request, res: Response }) {
+  getTask: function (root: any, args: any, ctx: { req: Request, res: Response }) {
 
   },
   createTask: function (root: any, args: TaskInput, ctx: { req: Request, res: Response }) {

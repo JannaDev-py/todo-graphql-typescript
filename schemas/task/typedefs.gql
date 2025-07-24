@@ -8,7 +8,7 @@ input TaskInput {
 }
 
 type Query {
-  getTask(id: ID!): [Task]
+  getTask: [Task]
 }
 
 type Mutation {
