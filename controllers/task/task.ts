@@ -29,11 +29,16 @@ const controller = {
     }
   },
 
-  deleteTask: function (root: any, args: TaskInput, ctx: { req: Request, res: Response, user: UserAccessToken }) {
+  deleteTask: async function (root: any, args: TaskInput, ctx: { req: Request, res: Response, user: UserAccessToken }) {
+    const { user } = ctx.user
     try {
-
+      if (user !== null) {
+        const task = await TaskModel.deleteTask(user._id, args.input.title)
+        return task
+      }
+      return null
     } catch (e) {
-      
+      return null
     }
   }
 }
