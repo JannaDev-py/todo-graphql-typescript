@@ -162,6 +162,29 @@ describe('Controller-User', () => {
         })
       )
     })
+
+    test('getTask', async () => {
+      const query = `#graphql
+        query getTask {
+          getTask {
+            id_user
+            title
+          }
+        }
+      `
+      const response = await agent
+        .post('/graphql')
+        .send({ query })
+
+      expect(response.body.data.getTask).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            id_user: expect.any(String),
+            title: 'test'
+          })
+        ])
+      )
+    })
   })
 
   test('deleteUser', async () => {
@@ -178,7 +201,6 @@ describe('Controller-User', () => {
     const response = await agent
       .post('/graphql')
       .send({ query })
-    console.log(response.body)
     expect(response.body.data).toEqual(
       expect.objectContaining({
         deleteUser: {

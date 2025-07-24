@@ -68,7 +68,6 @@ const controller = {
 
       return user
     } catch (e) {
-      console.log(e)
       return null
     }
   },
