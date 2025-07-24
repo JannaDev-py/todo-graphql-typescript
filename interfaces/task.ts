@@ -4,5 +4,7 @@ export interface Task {
 }
 
 export interface TaskInput {
-  title: string
+  input: {
+    title: string
+  }
 }

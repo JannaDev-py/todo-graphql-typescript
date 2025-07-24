@@ -178,7 +178,7 @@ describe('Controller-User', () => {
     const response = await agent
       .post('/graphql')
       .send({ query })
-
+    console.log(response.body)
     expect(response.body.data).toEqual(
       expect.objectContaining({
         deleteUser: {

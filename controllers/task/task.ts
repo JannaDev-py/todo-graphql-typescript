@@ -15,10 +15,21 @@ const controller = {
       return null
     }
   },
-  createTask: function (root: any, args: TaskInput, ctx: { req: Request, res: Response }) {
 
+  createTask: async function (root: any, args: TaskInput, ctx: { req: Request, res: Response, user: UserAccessToken }) {
+    const { user } = ctx.user
+    try {
+      if (user !== null) {
+        const task = await TaskModel.createTask(user._id, args.input.title)
+        return task
+      }
+      return null
+    } catch (e) {
+      return null
+    }
   },
-  deleteTask: function (root: any, args: TaskInput, ctx: { req: Request, res: Response }) {
+
+  deleteTask: function (root: any, args: TaskInput, ctx: { req: Request, res: Response, user: UserAccessToken }) {
 
   }
 }
