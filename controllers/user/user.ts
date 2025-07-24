@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { User, CreateUser, ComfirmCreateUser } from '../../interfaces/user'
+import { User, CreateUser, ComfirmCreateUser, UserAccessToken } from '../../interfaces/user'
 import { sendEmail, verifyEmail, generateCode } from '../../utils/utils'
 import UserModel from '../../models/user/user'
 import jwt from 'jsonwebtoken'
@@ -73,12 +73,10 @@ const controller = {
     }
   },
 
-  deleteUser: async function (root: any, args: CreateUser, ctx: { req: Request, res: Response }): Promise<User | null> {
-    const { req, res } = ctx
+  deleteUser: async function (root: any, args: CreateUser, ctx: { req: Request, res: Response, user: UserAccessToken }): Promise<User | null> {
+    const { res } = ctx
     try {
-      const { user } = (jwt.verify(req.cookies.refreshToken, JWT as string) as { user: { name: string, email: string, pwd: string, _id: string, __v?: string } })
-
-      delete user.__v
+      const { user } = ctx.user
 
       res.clearCookie('refreshToken')
       res.clearCookie('accessToken')

@@ -28,3 +28,5 @@ export interface ComfirmCreateUser {
     code: number
   }
 }
+
+export interface UserAccessToken { user: { name: string, email: string, pwd: string, _id: string, __v?: string }}
