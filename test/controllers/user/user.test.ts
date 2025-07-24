@@ -113,6 +113,27 @@ describe('Controller-User', () => {
     expect(cookies?.some(cookie => cookie.includes('accessToken='))).toBe(true)
   })
 
+  test('logIn', async () => {
+    const query = `#graphql
+      query ExampleQuery($input: CreateUser!) {
+        logIn(input: $input)
+      }
+    `
+
+    const variables = {
+      input: {
+        email: 'example@gmail.com',
+        name: 'test',
+        pwd: '123'
+      }
+    }
+    const response = await agent
+      .post('/graphql')
+      .send({ query, variables })
+
+    expect(response.body.data.logIn).toBe(true)
+  })
+
   test('deleteUser', async () => {
     const query = `#graphql
       mutation ExampleQuery {

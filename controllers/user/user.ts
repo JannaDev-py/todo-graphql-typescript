@@ -90,11 +90,14 @@ const controller = {
     }
   },
 
-  logIn: function (root: any, args: CreateUser, ctx: { req: Request, res: Response }): boolean {
+  logIn: async function (root: any, args: CreateUser, ctx: { req: Request, res: Response }): Promise<boolean> {
     const { res } = ctx
     try {
-      const user = UserModel.logIn({ email: args.input.email, pwd: args.input.pwd })
-      console.log({ user })
+      const user = await UserModel.logIn({ email: args.input.email, pwd: args.input.pwd })
+
+      res.clearCookie('refreshToken')
+      res.clearCookie('accessToken')
+
       res.cookie('refreshToken', jwt.sign({ user }, JWT as string), { httpOnly: true, maxAge: 60 * 60 * 24 * 50 })
       res.cookie('accessToken', jwt.sign({ user }, JWT as string), { httpOnly: true, maxAge: 60 * 60 * 15 })
 
