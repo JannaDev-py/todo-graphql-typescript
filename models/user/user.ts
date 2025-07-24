@@ -45,7 +45,7 @@ const model = {
       if (user !== null) {
         const pwd = await bcrypt.compare(args.pwd, user.pwd)
 
-        if (pwd === true) {
+        if (pwd) {
           return user
         } else throw new IncorrectPwd('incorrect pwd')
       }

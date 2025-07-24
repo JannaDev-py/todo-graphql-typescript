@@ -13,6 +13,8 @@ const model = {
   createTask: async function (id: string, title: string) {
     try {
       const newTask = await new TaskDBModel({ id_user: id, title })
+      await newTask.save()
+
       return newTask
     } catch (e) {
       throw new Database('something went wrong')
