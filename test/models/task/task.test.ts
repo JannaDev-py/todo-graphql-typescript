@@ -29,4 +29,17 @@ describe('Task-model', () => {
       })
     )
   })
+  test('getTask', async () => {
+    const response = await Taskmodel.getTask(user.id)
+
+    expect(response).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          _id: expect.anything(),
+          title: 'test',
+          id_user: user.id
+        })
+      ])
+    )
+  })
 })
