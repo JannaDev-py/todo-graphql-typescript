@@ -1,0 +1,17 @@
+type Task {
+  id_user: String
+  title: String
+}
+
+input TaskInput {
+  title: String
+}
+
+type Query {
+  getTask(id: ID!): [Task]
+}
+
+type Mutation {
+  createTask(input: TaskInput): Task
+  deleteTask(input: TaskInput): Task
+}
