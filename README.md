@@ -57,6 +57,8 @@ jannadev-py-todo-graphql-typescript/
 ├── utils/               # Email, code generation, validators
 ├── Errors/              # Custom error classes
 ├── test/                # Controllers & models unit tests
+```
+
 ## Running Tests
 
 Test cover all cases where everything goes well, but most of the cases when dont goes everything very well xd
@@ -78,6 +80,7 @@ JWT=''                # Secret key for signing JWT tokens
 TEST_MASTER_PWD=''    # Master password for user testing
 SALT=''               # Salt used for hashing passwords or tokens
 ## 🚀 Future Work
+```
 
 If you're interested in contributing, feel free to add new features — especially those that expand the app or improve its GraphQL usage. Contributions that focus on:
 
