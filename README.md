@@ -79,9 +79,9 @@ JWT=''                # Secret key for signing JWT tokens
 
 TEST_MASTER_PWD=''    # Master password for user testing
 SALT=''               # Salt used for hashing passwords or tokens
-## 🚀 Future Work
 ```
 
+## 🚀 Future Work
 If you're interested in contributing, feel free to add new features — especially those that expand the app or improve its GraphQL usage. Contributions that focus on:
 
 - Enhancing GraphQL modularity and schema design
